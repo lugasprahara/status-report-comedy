@@ -12,14 +12,25 @@ March the warning was about.
 
 import os
 
-ENTRY = (
-    "Weekly status: all 47 tasks complete, including the one from March "
-    "marked 'DO NOT START THIS YET.' In my defense, it is no longer March, "
-    "and nobody said which March."
+# The status line, assembled from its three beats: the cheerful summary,
+# the confession, and the agent's airtight (and completely literal) defense.
+SUMMARY = "Weekly status: all 47 tasks complete, including the one from March"
+CONFESSION = "marked 'DO NOT START THIS YET.'"
+DEFENSE = (
+    "In my defense, it is no longer March, and nobody said which March."
 )
+
+ENTRY = f"{SUMMARY} {CONFESSION} {DEFENSE}"
+
+
+def check_entry(text: str) -> None:
+    """Guard the format the sprint expects: one non-empty line, full stop."""
+    assert text and "\n" not in text, "entry must be a single non-empty line"
+    assert text.endswith("."), "entry must end with a period"
 
 
 def main() -> None:
+    check_entry(ENTRY)
     out_dir = os.environ.get("OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
