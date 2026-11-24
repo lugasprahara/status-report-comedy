@@ -24,9 +24,10 @@ ENTRY = f"{SUMMARY} {CONFESSION} {DEFENSE}"
 
 
 def check_entry(text: str) -> None:
-    """Guard the format the sprint expects: one non-empty line, full stop."""
+    """Guard the format the sprint expects: one short line, full stop."""
     assert text and "\n" not in text, "entry must be a single non-empty line"
     assert text.endswith("."), "entry must end with a period"
+    assert len(text) < 200, "entry must stay under 200 chars"
 
 
 def main() -> None:
